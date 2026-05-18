@@ -1,0 +1,32 @@
+{
+  "repo": "criterion-drift-local",
+  "package": "criterion_drift_local",
+  "cli": "criterion-drift",
+  "company": "Tennr",
+  "title": "Criterion Drift Local",
+  "tagline": "Offline healthcare document-intake criterion drift detector for referrals, prior auth, and fax workflows.",
+  "problem": "Healthcare intake automation must catch when payer or clinic rules drift before documents route to the wrong workflow.",
+  "project": "criterion-drift",
+  "plan_slug": "tennr",
+  "scenario": "intake packet",
+  "fixture_count": 220,
+  "clean_count": 60,
+  "metrics": [
+    "criterion_recall",
+    "patient_split_accuracy",
+    "routing_precision",
+    "evidence_span_coverage"
+  ],
+  "failure_modes": [
+    "multi_patient_packet",
+    "payer_rule_drift",
+    "missing_required_doc",
+    "wrong_patient_merge"
+  ],
+  "wow": "A packet split/reasoning report shows exactly which page triggered each intake criterion and route.",
+  "sources": [
+    "https://www.tennr.com/",
+    "https://www.reddit.com/r/healthIT/comments/1kymsc2",
+    "https://www.reddit.com/r/healthIT/comments/1kymt3m"
+  ]
+}
