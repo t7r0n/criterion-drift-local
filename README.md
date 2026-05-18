@@ -1,36 +1,21 @@
 # Criterion Drift Local
 
-Offline healthcare document-intake criterion drift detector for referrals, prior auth, and fax workflows.
-
-This is a local-first, synthetic-data prototype inspired by a company-specific project plan for **Tennr**. It is built to demonstrate the engineering shape of `criterion-drift` without private data, credentials, external APIs, or hosted services.
-
-## Why it matters
-
 Healthcare intake automation must catch when payer or clinic rules drift before documents route to the wrong workflow.
 
-## What it does
+The implementation is a laptop-scale proof of the workflow behind that claim, with `intake packet` fixtures and falsifiable gates.
 
-- Generates deterministic synthetic `intake packet` scenarios.
-- Scores each scenario against domain-specific quality gates.
-- Produces evidence-backed findings for realistic failure modes.
-- Writes a static dashboard, JSON reports, benchmark output, and a portable demo pack.
-- Exposes a JSONL tool loop for local agent integration.
+## Design intent
 
-## Metrics
+Offline healthcare document-intake criterion drift detector for referrals, prior auth, and fax workflows.
 
-- `criterion_recall`
-- `patient_split_accuracy`
-- `routing_precision`
-- `evidence_span_coverage`
+## Implementation notes
 
-## Failure modes
+- Compiles 220 replayable `intake packet` fixtures that make the `criterion-drift` assumptions observable.
+- Treats `criterion_recall`, `patient_split_accuracy`, `routing_precision`, and `evidence_span_coverage` as release gates, not dashboard decoration.
+- Plants degraded cases for `multi_patient_packet`, `payer_rule_drift`, `missing_required_doc`, and `wrong_patient_merge` and checks whether the harness catches them.
+- Exports the `Criterion Drift Local` run as structured reports, static HTML, benchmark numbers, and a shareable package.
 
-- `multi_patient_packet`
-- `payer_rule_drift`
-- `missing_required_doc`
-- `wrong_patient_merge`
-
-## Quickstart
+## Reproduce the run
 
 ```bash
 uv sync --extra dev
@@ -42,7 +27,7 @@ uv run criterion-drift benchmark --iterations 100
 uv run criterion-drift export-demo-pack
 ```
 
-## Expected outputs
+## Artifacts
 
 - `data/scenarios.json`
 - `outputs/summary.json`
@@ -52,7 +37,7 @@ uv run criterion-drift export-demo-pack
 - `outputs/benchmark.json`
 - `outputs/demo-pack.zip`
 
-## Validation
+## Release checks
 
 ```bash
 uv run ruff check .
@@ -62,6 +47,6 @@ uv run criterion-drift verify
 uv run criterion-drift benchmark --iterations 100
 ```
 
-## Demo hook
+## Public data stance
 
-A packet split/reasoning report shows exactly which page triggered each intake criterion and route.
+The `criterion-drift-local` public surface is source, tests, lockfile, and docs. It does not need credentials, browser state, customer records, or hosted services.
